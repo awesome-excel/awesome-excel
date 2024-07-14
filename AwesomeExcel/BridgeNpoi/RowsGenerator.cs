@@ -99,7 +99,7 @@ internal class RowsGenerator
     private void GenerateCells(_NPOI.IRow npoiRow, _Excel.Row excelRow, int rowNumber)
     {
         int rowColumnsCount = excelRow?.Cells?.Count ?? 0;
-        int sheetColumnCount = (excelSheet.Columns?.Count ?? 0);
+        int sheetColumnCount = excelSheet.Columns?.Count ?? 0;
 
         for (int columnIndex = 0; columnIndex < rowColumnsCount; columnIndex++)
         {

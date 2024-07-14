@@ -128,7 +128,6 @@ public class Generate_Excel_AwesomeExcel
             // Customize the header row
             customization.Sheet
                 .HasHeader()
-                .SetHeaderBorderBottomColor(Color.Red)
                 .SetHeaderFontBold()
                 .SetHeaderFontHeightInPoints(12)
                 .SetHeaderHorizontalAlignment(HorizontalAlignment.Center)
@@ -199,15 +198,16 @@ public class Generate_Excel_AwesomeExcel
         {
             { new() { Amount = 35, CreationDate = new DateTime(2016, 01, 01) } },
             { new() { Amount = 52, CreationDate = new DateTime(2016, 02, 01) } },
-            { new() { Amount = 123123, CreationDate = new DateTime(2016, 03, 01) } },
-            { new() { Amount = 34345654, CreationDate = new DateTime(2016, 04, 01) } },
+            { new() { Amount = 12312.3, CreationDate = new DateTime(2016, 03, 01) } },
+            { new() { Amount = 3434.5654, CreationDate = new DateTime(2016, 04, 01) } },
             { new() { Amount = 234, CreationDate = new DateTime(2016, 05, 01) } },
-            { new() { Amount = 123, CreationDate = new DateTime(2016, 06, 01) } },
+            { new() { Amount = 12.3, CreationDate = new DateTime(2016, 06, 01) } },
             { new() { Amount = 35, CreationDate = new DateTime(2016, 06, 05) } },
             { new() { Amount = 7, CreationDate = new DateTime(2016, 06, 12) } },
-            { new() { Amount = 3567, CreationDate = new DateTime(2018, 01, 01) } },
+            { new() { Amount = 3.567, CreationDate = new DateTime(2018, 01, 01) } },
             { new() { Amount = 8776, CreationDate = new DateTime(2019, 01, 01) } },
-            { new() { Amount = 567, CreationDate = new DateTime(2020, 01, 01) } },
+            { new() { Amount = 56.7, CreationDate = new DateTime(2020, 01, 01) } },
+            { new() { Amount = 56.70, CreationDate = new DateTime(2020, 01, 02) } },
         };
     }
 
