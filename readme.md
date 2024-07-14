@@ -102,3 +102,6 @@ MemoryStream file = awesomeExcel.Generate(actors, invoices, (SheetsCustomizer<Pe
         .SetDateTimeFormat("dddd dd mmmm YYYY");
 });
 ```
+
+####
+We currently don't support charts/formulas and reading Excel files.
