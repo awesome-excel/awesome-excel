@@ -1,7 +1,8 @@
-﻿using AwesomeExcel.Common.Models;
+﻿using AwesomeExcel.BridgeNpoi;
+using AwesomeExcel.Common.Models;
 using NPOI.SS.UserModel;
 
-namespace AwesomeExcel.BridgeNpoi.UnitTests;
+namespace Tests.BridgeNpoi;
 
 [TestClass]
 public class StyleConverterTest

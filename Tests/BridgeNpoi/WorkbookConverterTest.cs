@@ -1,6 +1,7 @@
-﻿using AwesomeExcel.Common.Models;
+﻿using AwesomeExcel.BridgeNpoi;
+using AwesomeExcel.Common.Models;
 
-namespace AwesomeExcel.BridgeNpoi.UnitTests;
+namespace Tests.BridgeNpoi;
 
 [TestClass]
 public class WorkbookConverterTest

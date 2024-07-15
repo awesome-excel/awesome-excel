@@ -2,7 +2,7 @@
 using AwesomeExcel.Customization.Models;
 using AwesomeExcel.Customization.Fluent;
 
-namespace AwesomeExcel.FluentCustomization.UnitTests;
+namespace Tests.FluentCustomization;
 
 [TestClass]
 public class SheetCustomizationHeaderStyleTest

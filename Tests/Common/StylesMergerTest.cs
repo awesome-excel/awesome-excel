@@ -2,7 +2,7 @@
 using AwesomeExcel.Common.Models;
 using AwesomeExcel.Common.Services;
 
-namespace AwesomeExcel.Common.UnitTests;
+namespace Tests.Common;
 
 [TestClass]
 public class StylesMergerTest

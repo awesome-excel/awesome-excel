@@ -4,7 +4,7 @@ using AwesomeExcel.Customization.Models;
 using AwesomeExcel.Generator;
 using System.Reflection;
 
-namespace Generator.UnitTests;
+namespace Tests.Generator;
 
 [TestClass]
 public class SheetFactory_ColumnsCustomizationTest

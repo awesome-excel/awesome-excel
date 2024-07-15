@@ -1,7 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using AwesomeExcel.BridgeNpoi;
 
-namespace AwesomeExcel.BridgeNpoi.UnitTests;
+namespace Tests.BridgeNpoi;
 
 [TestClass]
 public class WorkbookWriterTest

@@ -1,8 +1,7 @@
 ﻿using AwesomeExcel.Common.Comparers;
 using AwesomeExcel.Common.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AwesomeExcel.Common.UnitTests;
+namespace Tests.Common;
 
 [TestClass]
 public class StyleEqualityComparerTest

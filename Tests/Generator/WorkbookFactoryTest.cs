@@ -1,7 +1,8 @@
 using AwesomeExcel.Common.Models;
 using AwesomeExcel.Customization.Models;
+using AwesomeExcel.Generator;
 
-namespace AwesomeExcel.Generator.UnitTests;
+namespace Tests.Generator;
 
 [TestClass]
 public class WorkbookFactoryTest
@@ -42,7 +43,7 @@ public class WorkbookFactoryTest
         WorkbookFactory workbookFactory = new();
 
         Sheet sheet = factory.Create(data, null, null, null);
-        Workbook wb = workbookFactory.Create(new[] { sheet }, (WorkbookCustomization)null);
+        Workbook wb = workbookFactory.Create(new[] { sheet }, null);
 
         Assert.IsNotNull(wb);
     }
@@ -54,7 +55,7 @@ public class WorkbookFactoryTest
         WorkbookFactory workbookFactory = new();
 
         Sheet sheet = factory.Create(data, null, null, null);
-        Workbook wb = workbookFactory.Create(new[] { sheet }, (WorkbookCustomization)null);
+        Workbook wb = workbookFactory.Create(new[] { sheet }, null);
 
         Assert.IsNotNull(wb.Sheets);
     }
@@ -66,7 +67,7 @@ public class WorkbookFactoryTest
         WorkbookFactory workbookFactory = new();
 
         Sheet sheet = factory.Create(data, null, null, null);
-        Workbook wb = workbookFactory.Create(new[] { sheet }, (WorkbookCustomization)null);
+        Workbook wb = workbookFactory.Create(new[] { sheet }, null);
 
         Assert.AreEqual(wb.Sheets.Count, 1);
     }

@@ -1,7 +1,7 @@
-﻿using AwesomeExcel.Customization.Models;
-using AwesomeExcel.Customization;
+﻿using AwesomeExcel.Customization;
+using AwesomeExcel.Customization.Models;
 
-namespace AwesomeExcel.FluentCustomization.UnitTests;
+namespace Tests.FluentCustomization;
 
 [TestClass]
 public class SheetCustomizationTest

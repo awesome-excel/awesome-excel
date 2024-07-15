@@ -1,9 +1,10 @@
 using AwesomeExcel.Common.Models;
 using AwesomeExcel.Customization;
 using AwesomeExcel.Customization.Models;
+using AwesomeExcel.Generator;
 using System.Reflection;
 
-namespace AwesomeExcel.Generator.UnitTests;
+namespace Tests.Generator;
 
 [TestClass]
 public class SheetFactory_CellsCustomizationTest

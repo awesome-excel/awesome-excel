@@ -1,7 +1,7 @@
 ﻿using AwesomeExcel.Common.Comparers;
 using AwesomeExcel.Common.Models;
 
-namespace AwesomeExcel.Common.UnitTests;
+namespace Tests.Common;
 
 [TestClass]
 public class FontStyleEqualityComparerTest

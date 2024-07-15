@@ -1,6 +1,7 @@
 using AwesomeExcel.Common.Models;
+using AwesomeExcel.Generator;
 
-namespace AwesomeExcel.Generator.UnitTests;
+namespace Tests.Generator;
 
 [TestClass]
 public class SheetFactoryTest
