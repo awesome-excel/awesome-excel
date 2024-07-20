@@ -38,7 +38,8 @@ public class WorkbookConverter
         _NPOI.IWorkbook workbook = fileType switch
         {
             _Excel.FileType.Xls => new NPOI.HSSF.UserModel.HSSFWorkbook(),
-            _Excel.FileType.Xlsx => new NPOI.XSSF.UserModel.XSSFWorkbook(),
+            //_Excel.FileType.Xlsx => new NPOI.XSSF.UserModel.XSSFWorkbook(),
+            _Excel.FileType.Xlsx => new NPOI.XSSF.Streaming.SXSSFWorkbook(),
 
             _ => throw new NotSupportedException(),
         };

@@ -5,14 +5,8 @@ namespace AwesomeExcel.BridgeNpoi;
 
 internal class FontsCache
 {
-    private readonly _NPOI.IFont emptyFont;
     private readonly Dictionary<_Excel.FontStyle, _NPOI.IFont> cache = new(new Common.Comparers.FontStyleEqualityComparer());
     private readonly Dictionary<_Excel.FontStyle, int> referenceCounter = new(new Common.Comparers.FontStyleEqualityComparer());
-
-    public FontsCache(_NPOI.IWorkbook npoiWorkbook)
-    {
-        emptyFont = npoiWorkbook.CreateFont();
-    }
 
     public _NPOI.IFont Get(_Excel.FontStyle fontStyle)
     {
@@ -41,10 +35,6 @@ internal class FontsCache
         //
         //     Solution:
         //         This cache tracks the number of references for each font to manage usage limits.
-
-
-        if (fontStyle == null)
-            return emptyFont;
 
         (_NPOI.IFont npoiFont, int referenceCounter) = GetFromCache(fontStyle);
 

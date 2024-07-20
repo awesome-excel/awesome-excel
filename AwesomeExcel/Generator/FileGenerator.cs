@@ -19,15 +19,13 @@ public abstract class FileGenerator<TWorkbook>
     /// <param name="rows">The rows of the sheet.</param>
     /// <param name="customization">A delegate used to customize the Excel file.</param>
     /// <returns>The MemoryStream of the Excel file.</returns>
-    public MemoryStream Generate<TSheet>(IEnumerable<TSheet> rows, Action<SheetCustomizer<TSheet>> customization)
+    public MemoryStream Generate<TSheet>(IEnumerable<TSheet> rows, Action<SheetCustomizer<TSheet>> customization = null)
     {
-        SheetCustomizer<TSheet> customizer = new();
-        customization(customizer);
+        SheetCustomizer<TSheet> customizer = GetCustomizer(customization);
 
-        Sheet sheet = sheetFactory.Create(rows, customizer.Sheet, customizer.GetCustomizedColumns(), customizer.GetCustomizedCells());
-
-        Workbook excelWorkbook = workbookFactory.Create(new Sheet[1] { sheet }, customizer.Workbook);
-        return GetStream(excelWorkbook);
+        Sheet sheet = sheetFactory.Create(rows, customizer, customizer?.GetColumns(), customizer?.GetCells());
+        Workbook workbook = workbookFactory.Create(new Sheet[1] { sheet }, customizer?.Workbook);
+        return GetStream(workbook);
     }
 
     /// <summary>
@@ -39,16 +37,15 @@ public abstract class FileGenerator<TWorkbook>
     /// <param name="rowsSheet2">The rows of the second sheet.</param>
     /// <param name="customization">A delegate used to customize the Excel file.</param>
     /// <returns>The MemoryStream of the Excel file.</returns>
-    public MemoryStream Generate<TSheet1, TSheet2>(IEnumerable<TSheet1> rowsSheet1, IEnumerable<TSheet2> rowsSheet2, Action<SheetsCustomizer<TSheet1, TSheet2>> customization)
+    public MemoryStream Generate<TSheet1, TSheet2>(IEnumerable<TSheet1> rowsSheet1, IEnumerable<TSheet2> rowsSheet2, Action<SheetCustomizer<TSheet1>, SheetCustomizer<TSheet2>> customization = null)
     {
-        SheetsCustomizer<TSheet1, TSheet2> customizer = new();
-        customization(customizer);
+        var (customizer1, customizer2) = GetCustomizer(customization);
 
-        Sheet sheet1 = sheetFactory.Create(rowsSheet1, customizer.Sheet1, customizer.GetCustomizedColumns(customizer.Sheet1), customizer.GetCustomizedCells(customizer.Sheet1));
-        Sheet sheet2 = sheetFactory.Create(rowsSheet2, customizer.Sheet2, customizer.GetCustomizedColumns(customizer.Sheet2), customizer.GetCustomizedCells(customizer.Sheet2));
+        Sheet sheet1 = sheetFactory.Create(rowsSheet1, customizer1, customizer1?.GetColumns(), customizer1?.GetCells());
+        Sheet sheet2 = sheetFactory.Create(rowsSheet2, customizer2, customizer2?.GetColumns(), customizer2?.GetCells());
 
-        Workbook excelWorkbook = workbookFactory.Create(new Sheet[] { sheet1, sheet2 }, customizer.Workbook);
-        return GetStream(excelWorkbook);
+        Workbook workbook = workbookFactory.Create(new Sheet[] { sheet1, sheet2 }, customizer1?.Workbook);
+        return GetStream(workbook);
     }
 
     /// <summary>
@@ -62,23 +59,28 @@ public abstract class FileGenerator<TWorkbook>
     /// <param name="rowsSheet3">The rows of the third sheet.</param>
     /// <param name="customization">A delegate used to customize the Excel file.</param>
     /// <returns>The MemoryStream of the Excel file.</returns>
-    public MemoryStream Generate<TSheet1, TSheet2, TSheet3>(IEnumerable<TSheet1> rowsSheet1, IEnumerable<TSheet2> rowsSheet2, IEnumerable<TSheet3> rowsSheet3, Action<SheetsCustomizer<TSheet1, TSheet2, TSheet3>> customization)
+    public MemoryStream Generate<TSheet1, TSheet2, TSheet3>(IEnumerable<TSheet1> rowsSheet1, IEnumerable<TSheet2> rowsSheet2, IEnumerable<TSheet3> rowsSheet3, Action<SheetCustomizer<TSheet1>, SheetCustomizer<TSheet2>, SheetCustomizer<TSheet3>> customization)
     {
-        SheetsCustomizer<TSheet1, TSheet2, TSheet3> customizer = new();
-        customization(customizer);
+        var (customizer1, customizer2, customizer3) = GetCustomizer(customization);
 
-        Sheet sheet1 = sheetFactory.Create(rowsSheet1, customizer.Sheet1, customizer.GetCustomizedColumns(customizer.Sheet1), customizer.GetCustomizedCells(customizer.Sheet1));
-        Sheet sheet2 = sheetFactory.Create(rowsSheet2, customizer.Sheet2, customizer.GetCustomizedColumns(customizer.Sheet2), customizer.GetCustomizedCells(customizer.Sheet2));
-        Sheet sheet3 = sheetFactory.Create(rowsSheet3, customizer.Sheet3, customizer.GetCustomizedColumns(customizer.Sheet3), customizer.GetCustomizedCells(customizer.Sheet3));
+        Sheet sheet1 = sheetFactory.Create(rowsSheet1, customizer1, customizer1?.GetColumns(), customizer1?.GetCells());
+        Sheet sheet2 = sheetFactory.Create(rowsSheet2, customizer2, customizer2?.GetColumns(), customizer2?.GetCells());
+        Sheet sheet3 = sheetFactory.Create(rowsSheet3, customizer3, customizer3?.GetColumns(), customizer3?.GetCells());
 
-        Workbook excelWorkbook = workbookFactory.Create(new List<Sheet> { sheet1, sheet2, sheet3 }, customizer.Workbook);
-        return GetStream(excelWorkbook);
+        Workbook workbook = workbookFactory.Create(new List<Sheet> { sheet1, sheet2, sheet3 }, customizer1?.Workbook);
+        return GetStream(workbook);
     }
 
     private MemoryStream GetStream(Workbook workbook)
     {
         TWorkbook serviceWorkbook = Convert(workbook);
         MemoryStream stream = Write(serviceWorkbook);
+
+        if (typeof(TWorkbook).IsAssignableTo(typeof(IDisposable)))
+        {
+            ((IDisposable)serviceWorkbook)?.Dispose();
+        }
+
         return stream;
     }
 
@@ -95,6 +97,47 @@ public abstract class FileGenerator<TWorkbook>
     /// <param name="workbook">The workbook to be written.</param>
     /// <returns>The stream the Excel file is written into.</returns>
     protected abstract MemoryStream Write(TWorkbook workbook);
+
+    private SheetCustomizer<TSheet> GetCustomizer<TSheet>(Action<SheetCustomizer<TSheet>> customization)
+    {
+        if (customization == null)
+        {
+            return null;
+        }
+
+        SheetCustomizer<TSheet> customizer = new();
+        customization(customizer);
+        return customizer;
+    }
+
+    private (SheetCustomizer<TSheet1>, SheetCustomizer<TSheet2>) GetCustomizer<TSheet1, TSheet2>(Action<SheetCustomizer<TSheet1>, SheetCustomizer<TSheet2>> customization)
+    { 
+        if (customization == null)
+        {
+            return (null, null);
+        }
+
+        SheetCustomizer<TSheet1> customizer1 = new();
+        SheetCustomizer<TSheet2> customizer2 = new();
+
+        customization(customizer1, customizer2);
+        return (customizer1, customizer2);
+    }
+
+    private (SheetCustomizer<TSheet1>, SheetCustomizer<TSheet2>, SheetCustomizer<TSheet3>) GetCustomizer<TSheet1, TSheet2, TSheet3>(Action<SheetCustomizer<TSheet1>, SheetCustomizer<TSheet2>, SheetCustomizer<TSheet3>> customization)
+    {
+        if (customization == null)
+        {
+            return (null, null, null);
+        }
+
+        SheetCustomizer<TSheet1> customizer1 = new();
+        SheetCustomizer<TSheet2> customizer2 = new();
+        SheetCustomizer<TSheet3> customizer3 = new();
+
+        customization(customizer1, customizer2, customizer3);
+        return (customizer1, customizer2, customizer3);
+    }
 }
 
 

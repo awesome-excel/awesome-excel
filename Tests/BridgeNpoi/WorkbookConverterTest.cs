@@ -1,5 +1,9 @@
 ﻿using AwesomeExcel.BridgeNpoi;
 using AwesomeExcel.Common.Models;
+using AwesomeExcel.Customization;
+using AwesomeExcel.Customization.Services;
+using AwesomeExcel.Generator;
+using Tests.IntegrationTests;
 
 namespace Tests.BridgeNpoi;
 
@@ -436,5 +440,64 @@ public class WorkbookConverterTest
         Assert.AreEqual(expected: true, actual: row7.Cells[0].CellStyle.GetFont(npoiWorkbook).IsBold);
         Assert.AreEqual(expected: true, actual: row8.Cells[0].CellStyle.GetFont(npoiWorkbook).IsBold);
         Assert.AreEqual(expected: true, actual: row9.Cells[0].CellStyle.GetFont(npoiWorkbook).IsBold);
+    }
+
+    [TestMethod]
+    public void Test12()
+    {
+        List<Person> rows = GetActors();
+        SheetCustomizer<Person> customizer = new();
+        customizer.HasHeader();
+        customizer.Column(person => person.Name).SetName("person name");
+
+        Sheet sheet = new SheetFactory().Create(rows, customizer, customizer?.GetColumns(), customizer?.GetCells());
+        Workbook workbook = new WorkbookFactory().Create(new Sheet[1] { sheet }, customizer?.Workbook);
+
+        NPOI.SS.UserModel.IWorkbook npoiWorkbook = new WorkbookConverter().Convert(workbook);
+    }
+
+    private List<Person> GetActors()
+    {
+        return new List<Person>
+        {
+            { new() { Name =  "Caroline", Surname = "Aaron", BirthDate = DateTime.Parse("1952-08-07") } },
+            { new() { Name =  "Victor", Surname = "Aaron", BirthDate = DateTime.Parse("1956-09-11") } },
+            { new() { Name =  "Diego", Surname = "Abatantuono", BirthDate = DateTime.Parse("1955-05-20") } },
+            { new() { Name =  "Andrew", Surname = "Abeita", BirthDate = DateTime.Parse("1981-07-11") } },
+            { new() { Name =  "Jon", Surname = "Abrahams", BirthDate = DateTime.Parse("1977-10-29") } },
+            { new() { Name =  "Stefano", Surname = "Accorsi", BirthDate = DateTime.Parse("1971-03-02") } },
+            { new() { Name =  "Dean", Surname = "Acheson", BirthDate = DateTime.Parse("1893-04-11") } },
+            { new() { Name =  "Josh", Surname = "Ackerman", BirthDate = DateTime.Parse("1977-03-23") } },
+            { new() { Name =  "Joss", Surname = "Ackland", BirthDate = DateTime.Parse("1928-02-29") } },
+            { new() { Name =  "Jay", Surname = "Acovone", BirthDate = DateTime.Parse("1955-08-20") } },
+            { new() { Name =  "Deb", Surname = "Adair", BirthDate = DateTime.Parse("1966-04-22") } },
+            { new() { Name =  "Enid-Raye", Surname = "Adams", BirthDate = DateTime.Parse("1973-06-16") } },
+            { new() { Name =  "Jacob", Surname = "Adams", BirthDate = DateTime.Parse("1975-07-04") } },
+            { new() { Name =  "Mario", Surname = "Adorf", BirthDate = DateTime.Parse("1930-09-08") } },
+            { new() { Name =  "Ben", Surname = "Affleck", BirthDate = DateTime.Parse("1972-08-15") } },
+            { new() { Name =  "Casey", Surname = "Affleck", BirthDate = DateTime.Parse("1975-08-12") } },
+            { new() { Name =  "Spiro", Surname = "Agnew", BirthDate = DateTime.Parse("1918-11-09") } },
+            { new() { Name =  "Antonio", Surname = "Agri", BirthDate = DateTime.Parse("1932-05-05") } },
+            { new() { Name =  "Jenny", Surname = "Agutter", BirthDate = DateTime.Parse("1952-12-20") } },
+            { new() { Name =  "Betsy", Surname = "Aidem", BirthDate = DateTime.Parse("1957-10-28") } },
+            { new() { Name =  "Liam", Surname = "Aiken", BirthDate = DateTime.Parse("1990-01-07") } },
+            { new() { Name =  "Troy", Surname = "Aikman", BirthDate = DateTime.Parse("1966-11-21") } },
+            { new() { Name =  "Kacey", Surname = "Ainsworth", BirthDate = DateTime.Parse("1970-10-19") } },
+            { new() { Name =  "Holly", Surname = "Aird", BirthDate = DateTime.Parse("1969-05-18") } },
+            { new() { Name =  "Lucy", Surname = "Akhurst", BirthDate = DateTime.Parse("1975-11-18") } },
+            { new() { Name =  "Amy", Surname = "Alcott", BirthDate = DateTime.Parse("1956-02-22") } },
+            { new() { Name =  "Alan", Surname = "Alda", BirthDate = DateTime.Parse("1936-01-28") } },
+            { new() { Name =  "Tom", Surname = "Aldredge", BirthDate = DateTime.Parse("1928-02-28") } },
+            { new() { Name =  "Buzz", Surname = "Aldrin", BirthDate = DateTime.Parse("1930-01-20") } },
+            { new() { Name =  "Henry", Surname = "Alessandroni", BirthDate = DateTime.Parse("1959-05-26") } },
+            { new() { Name =  "Art", Surname = "Alexakis", BirthDate = DateTime.Parse("1962-04-12") } },
+            { new() { Name =  "Jane", Surname = "Alexander", BirthDate = DateTime.Parse("1939-10-28") } },
+            { new() { Name =  "Jason", Surname = "Alexander", BirthDate = DateTime.Parse("1959-09-23") } },
+            { new() { Name =  "Khandi", Surname = "Alexander", BirthDate = DateTime.Parse("1957-09-04") } },
+            { new() { Name =  "Adam", Surname = "Alexi-Malle", BirthDate = DateTime.Parse("1964-09-24") } },
+            { new() { Name =  "Hans", Surname = "Alfredson", BirthDate = DateTime.Parse("1931-06-28") } },
+            { new() { Name =  "Mary", Surname = "Alice", BirthDate = DateTime.Parse("1941-12-03") } },
+            { new() { Name =  "Debbie", Surname = "Allen", BirthDate = DateTime.Parse("1950-01-16") } }
+        };
     }
 }

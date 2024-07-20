@@ -1,11 +1,7 @@
 ﻿using AwesomeExcel.BridgeNpoi;
 using AwesomeExcel.Common.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
-namespace AwesomeExcel.IntegrationTests;
+namespace Tests.IntegrationTests;
 
 [TestClass]
 public class Generate_Excel_NPOI_Bridge

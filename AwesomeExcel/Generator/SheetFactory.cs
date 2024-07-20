@@ -27,8 +27,8 @@ internal class SheetFactory
     public Sheet Create<TSheet>(
         IEnumerable<TSheet> rows,
         SheetCustomization<TSheet> sheetCustomization,
-        IReadOnlyDictionary<PropertyInfo, ColumnCustomization> columnsCustomization,
-        IReadOnlyDictionary<PropertyInfo, CellCustomization> cellsCustomization)
+        IReadOnlyDictionary<PropertyInfo, ColumnCustomization>? columnsCustomization,
+        IReadOnlyDictionary<PropertyInfo, CellCustomization>? cellsCustomization)
     {
         if (rows is null)
         {

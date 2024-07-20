@@ -1,0 +1,247 @@
+﻿using AwesomeExcel;
+using AwesomeExcel.Common.Models;
+using AwesomeExcel.Customization;
+using AwesomeExcel.Customization.Fluent;
+using AwesomeExcel.Customization.Services;
+using System.Diagnostics;
+
+namespace Tests.IntegrationTests;
+
+[TestClass]
+public class Generate_Excel_BigDataSets
+{
+    private bool writefile = true;
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_1()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(1);
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_1) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_100()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(100);
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_100) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_500()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(500);
+
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_500) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_1000()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(1000);
+
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_1000) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_2000()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(2000);
+
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+
+        string fileName = nameof(Generate_Excel_Invoices_2000) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_3000()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(3000);
+
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_3000) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_5000()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(5000);
+
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_5000) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_10_000()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(10_000);
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_10_000) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_20_000()
+    {
+        AwesomeExcel.ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(20_000);
+
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_20_000) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    [TestMethod]
+    public void Generate_Excel_Invoices_30_000()
+    {
+        ExcelGenerator awesomeExcel = new();
+        List<Invoice> invoices = MockData.GetInvoices(30_000);
+
+
+        MemoryStream file = Generate(awesomeExcel, invoices);
+
+        string fileName = nameof(Generate_Excel_Invoices_30_000) + ".xlsx";
+        WriteFile(file, fileName);
+    }
+
+    private static MemoryStream Generate(ExcelGenerator awesomeExcel, List<Invoice> invoices)
+    {
+        Action<SheetCustomizer<Invoice>> x = (customization) =>
+        {
+            // Customize the entire sheet
+            customization
+                .SetName("Client's invoices")
+                .SetFontName("Aptos")
+                .SetBordersColor(Color.Black);
+
+            // Customize the header row
+            customization
+                .HasHeader()
+                .SetHeaderFontBold()
+                .SetHeaderFontHeightInPoints(12)
+                .SetHeaderHorizontalAlignment(HorizontalAlignment.Center)
+                .SetHeaderFillForegroundColor(Color.Gray_25_Percent);
+
+            // Customize only the specified column 
+            customization.Column(columns => columns.CreationDate)
+                .SetName("Created on")
+                .SetDateTimeFormat("dddd dd mmmm YYYY");
+
+            // Customize only the cells which amount is greater than 1000
+            customization.Cells(columns => columns.Random1)
+                .SetFillForegroundColor(random1 => random1 > 1000 ? Color.LightGreen : null);
+        };
+
+        // Generate the Excel file with some customizations
+        MemoryStream file = awesomeExcel.Generate(invoices, x);
+        return file;
+    }
+
+    private void WriteFile(MemoryStream file, string fileName)
+    {
+        if (writefile == false) return;
+
+        string directory = Path.Combine(Environment.CurrentDirectory, "tests-output", nameof(Generate_Excel_BigDataSets));
+        Directory.CreateDirectory(directory);
+
+        string filePath = Path.Combine(directory, fileName);
+        byte[] fileBytes = file.ToArray();
+        File.WriteAllBytes(filePath, fileBytes);
+    }
+
+    private class Invoice
+    {
+        public DateTime CreationDate { get; set; }
+        public double Amount { get; set; }
+        public int Random1 { get; set; }
+        public int Random2 { get; set; }
+        public int Random3 { get; set; }
+        public int Random4 { get; set; }
+        public int Random5 { get; set; }
+        public int Random6 { get; set; }
+        public int Random7 { get; set; }
+        public int Random8 { get; set; }
+        public int Random9 { get; set; }
+        public string Random10 { get; set; }
+    }
+
+    private static class MockData
+    {
+        public static List<Invoice> Invoices = GetRandomInvoices(50000);
+
+        public static List<Invoice> GetRandomInvoices(int count)
+        {
+            List<Invoice> invoices = new();
+            Random random = new();
+
+            for (int i = 0; i < count; i++)
+            {
+                Invoice invoice = new()
+                {
+                    Amount = (random.NextDouble() * 10000) / 100,
+                    CreationDate = new DateTime(random.Next(1950, 2050), random.Next(1, 12), random.Next(1, 28), random.Next(0, 23), random.Next(0, 59), random.Next(0, 59)),
+                    Random1 = random.Next(),
+                    Random2 = random.Next(),
+                    Random3 = random.Next(),
+                    Random4 = random.Next(),
+                    Random5 = random.Next(),
+                    Random6 = random.Next(),
+                    Random7 = random.Next(),
+                    Random8 = random.Next(),
+                    Random9 = random.Next(),
+                    Random10 = RandomString(1, 100),
+                };
+                invoices.Add(invoice);
+            }
+
+            var x = System.Text.Json.JsonSerializer.Serialize(invoices);
+
+            return invoices;
+        }
+
+        public static List<Invoice> GetInvoices(int count)
+        {
+            return Invoices.Take(count).ToList();
+        }
+
+        private static string RandomString(int minLength, int maxLength)
+        {
+            // https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
+
+            Random random = new();
+
+            int length = random.Next(minLength, maxLength);
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+    }
+}

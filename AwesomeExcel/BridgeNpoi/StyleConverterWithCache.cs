@@ -12,12 +12,17 @@ internal class StyleConverterWithCache : StyleConverter, IDisposable
     public StyleConverterWithCache(_NPOI.ISheet npoiSheet) : base(npoiSheet.Workbook)
     {
         var npoiWorkbook = npoiSheet.Workbook;
-        stylesCache = new StylesCache(npoiWorkbook);
-        fontsCache = new FontsCache(npoiWorkbook);
+        stylesCache = new StylesCache();
+        fontsCache = new FontsCache();
     }
 
-    public override _NPOI.ICellStyle Convert(_Excel.Style style)
+    public override _NPOI.ICellStyle? Convert(_Excel.Style? style)
     {
+        if (style is null)
+        {
+            return null;
+        }
+
         _NPOI.ICellStyle npoiStyle = stylesCache.Get(style);
 
         if (npoiStyle == null)
@@ -29,8 +34,13 @@ internal class StyleConverterWithCache : StyleConverter, IDisposable
         return npoiStyle;
     }
 
-    public override _NPOI.IFont Convert(_Excel.FontStyle style)
+    public override _NPOI.IFont? Convert(_Excel.FontStyle? style)
     {
+        if (style is null)
+        {
+            return null;
+        }
+
         _NPOI.IFont npoiStyle = fontsCache.Get(style);
 
         if (npoiStyle == null)

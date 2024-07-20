@@ -12,21 +12,21 @@ public class StyleConverter
         this.npoiWorkbook = npoiWorkbook ?? throw new ArgumentNullException(nameof(npoiWorkbook));
     }
 
-    public virtual _NPOI.ICellStyle Convert(_Excel.Style excelStyle)
+    public virtual _NPOI.ICellStyle? Convert(_Excel.Style? excelStyle)
     {
         if (excelStyle is null)
         {
-            throw new ArgumentNullException(nameof(excelStyle));
+            return null; 
         }
 
         return CreateCellStyle(excelStyle);
     }
 
-    public virtual _NPOI.IFont Convert(_Excel.FontStyle excelStyle)
+    public virtual _NPOI.IFont? Convert(_Excel.FontStyle? excelStyle)
     {
         if (excelStyle is null)
         {
-            throw new ArgumentNullException(nameof(excelStyle));
+            return null; 
         }
 
         return CreateFont(excelStyle);

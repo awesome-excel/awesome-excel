@@ -4,22 +4,20 @@ using System.Reflection;
 
 namespace AwesomeExcel.Customization.Services;
 
-public class SheetCustomizer<T>
+public class SheetCustomizer<T> : SheetCustomization<T>
 {
-    private readonly ColumnsCustomizer ccs = new();
-    private readonly CellsCustomizer<T> cells = new();
+    private readonly Dictionary<PropertyInfo, CellCustomization> customizedCells = new();
+    private readonly Dictionary<PropertyInfo, ColumnCustomization> customizedColumns = new();
 
     public WorkbookCustomization Workbook { get; } = new();
-
-    public SheetCustomization<T> Sheet { get; } = new();
 
     public ColumnCustomization Column<TProperty>(Expression<Func<T, TProperty>> selector)
     {
         MemberExpression me = selector.Body as MemberExpression;
         PropertyInfo pi = me.Member as PropertyInfo;
 
-        var x = ccs.GetOrCreateColumn(pi);
-        return x;
+        ColumnCustomization cc = GetOrCreateColumn(pi);
+        return cc;
     }
 
     public CellCustomization<TProperty> Cells<TProperty>(Expression<Func<T, TProperty>> selector)
@@ -27,18 +25,41 @@ public class SheetCustomizer<T>
         MemberExpression me = selector.Body as MemberExpression;
         PropertyInfo pi = me.Member as PropertyInfo;
 
-        return (CellCustomization<TProperty>)cells.GetOrCreateCells<TProperty>(pi);
+        CellCustomization<TProperty> cc = GetOrCreateCells<TProperty>(pi);
+        return cc;
     }
 
-    internal IReadOnlyDictionary<PropertyInfo, ColumnCustomization> GetCustomizedColumns()
+    internal IReadOnlyDictionary<PropertyInfo, ColumnCustomization> GetColumns()
     {
-        IReadOnlyDictionary<PropertyInfo, ColumnCustomization> x = ccs.GetCustomizedColumn();
-        return x;
+        return customizedColumns;
     }
 
-    internal IReadOnlyDictionary<PropertyInfo, CellCustomization> GetCustomizedCells()
+    internal IReadOnlyDictionary<PropertyInfo, CellCustomization> GetCells()
     {
-        IReadOnlyDictionary<PropertyInfo, CellCustomization> x = cells.GetCustomizedCells();
-        return x;
+        return customizedCells;
+    }
+
+    private CellCustomization<TProperty> GetOrCreateCells<TProperty>(PropertyInfo pi)
+    {
+        if (customizedCells.TryGetValue(pi, out CellCustomization value))
+        {
+            return (CellCustomization<TProperty>)value;
+        }
+
+        CellCustomization<TProperty> ci = new();
+        customizedCells.Add(pi, ci);
+        return ci;
+    }
+
+    private ColumnCustomization GetOrCreateColumn(PropertyInfo pi)
+    {
+        if (customizedColumns.TryGetValue(pi, out ColumnCustomization value))
+        {
+            return value;
+        }
+
+        ColumnCustomization cc = new();
+        customizedColumns.Add(pi, cc);
+        return cc;
     }
 }

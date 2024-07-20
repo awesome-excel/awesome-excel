@@ -13,9 +13,10 @@ public class StylesMerger
     /// <param name="styles">The styles to be merged. 
     /// <br /> From lower priority to higher priority. </param>
     /// <returns>A new style with all the informations of the given styles.</returns>
-    public Style Merge(params Style[] styles)
+    public Style? Merge(params Style?[] styles)
     {
         Style accumulator = null;
+
         foreach (Style current in styles)
         {
             if (current == null)

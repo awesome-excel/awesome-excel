@@ -6,13 +6,7 @@ namespace AwesomeExcel.BridgeNpoi;
 
 internal class StylesCache
 {
-    private readonly _NPOI.ICellStyle noStyle;
     private readonly Dictionary<_Excel.Style, _NPOI.ICellStyle> cache = new(new Common.Comparers.StyleEqualityComparer());
-
-    public StylesCache(_NPOI.IWorkbook npoiWorkbook)
-    {
-        noStyle = npoiWorkbook.CreateCellStyle();
-    }
 
     public _NPOI.ICellStyle Get(_Excel.Style excelStyle)
     {
@@ -33,9 +27,6 @@ internal class StylesCache
 
         // Solution:
         //    Using a cache to re-use the same instance of (NPOI) ICellStyle for multiple cells/rows
-
-        if (excelStyle == null)
-            return noStyle;
 
         if (cache.TryGetValue(excelStyle, out _NPOI.ICellStyle npoiStyle))
             return npoiStyle;

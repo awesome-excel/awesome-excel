@@ -1,17 +1,17 @@
 ﻿using AwesomeExcel.BridgeNpoi;
 using AwesomeExcel.Common.Models;
-using NPOI.SS.UserModel;
+using _NPOI = NPOI.SS.UserModel;
 
 namespace Tests.BridgeNpoi;
 
 [TestClass]
 public class StyleConverterTest
 {
-    private IWorkbook GetNpoiWorkbookXlsx()
+    private _NPOI.IWorkbook GetNpoiWorkbookXlsx()
     {
         return new NPOI.XSSF.UserModel.XSSFWorkbook();
     }
-    private IWorkbook GetNpoiWorkbookXls()
+    private _NPOI.IWorkbook GetNpoiWorkbookXls()
     {
         return new NPOI.HSSF.UserModel.HSSFWorkbook();
     }
@@ -24,23 +24,25 @@ public class StyleConverterTest
     }
 
     [TestMethod]
-    public void Convert_NullStyle_ShouldThrow_ArgumentNullException()
+    public void Convert_NullStyle_Returns_NullNPOIStyle()
     {
-        IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
+        _NPOI.IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
         StyleConverter converter = new StyleConverter(npoiWorkbook);
         Style s = null;
-        
-        Assert.ThrowsException<ArgumentNullException>(() => converter.Convert(s));
+        _NPOI.ICellStyle npoiStyle = converter.Convert(s);
+
+        Assert.AreEqual(null, npoiStyle);
     }
 
     [TestMethod]
-    public void Convert_NullFontStyle_ShouldThrow_ArgumentNullException()
+    public void Convert_NullFontStyle_Returns_NullNPOIFontStyle()
     {
-        IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
+        _NPOI.IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
         StyleConverter converter = new StyleConverter(npoiWorkbook);
         FontStyle fs = null;
+        _NPOI.IFont npoiStyle = converter.Convert(fs);
 
-        Assert.ThrowsException<ArgumentNullException>(() => converter.Convert(fs));
+        Assert.AreEqual(null, npoiStyle);
     }
 
     [TestMethod]
@@ -51,9 +53,9 @@ public class StyleConverterTest
             BorderTopColor = Color.BlueGray
         };
 
-        IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
+        _NPOI.IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
         StyleConverter converter = new(npoiWorkbook);
-        ICellStyle npoiStyle = converter.Convert(blueGrayBorderTopColor);
+        _NPOI.ICellStyle npoiStyle = converter.Convert(blueGrayBorderTopColor);
 
         short expected = npoiStyle.TopBorderColor;
         short actual = (short)blueGrayBorderTopColor.BorderTopColor;
@@ -71,15 +73,15 @@ public class StyleConverterTest
             BorderRightColor = Color.Pink,
             DateTimeFormat = "yyyy/mm/dd hh:mm",
             FillForegroundColor = Color.Yellow,
-            FillPattern = Common.Models.FillPattern.LeastDots,
+            FillPattern = FillPattern.LeastDots,
             FontStyle = null,
-            HorizontalAlignment = Common.Models.HorizontalAlignment.Distributed,
-            VerticalAlignment = Common.Models.VerticalAlignment.Top
+            HorizontalAlignment = HorizontalAlignment.Distributed,
+            VerticalAlignment = VerticalAlignment.Top
         };
 
-        IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
+        _NPOI.IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
         StyleConverter converter = new(npoiWorkbook);
-        ICellStyle npoiStyle = converter.Convert(excelStyle);
+        _NPOI.ICellStyle npoiStyle = converter.Convert(excelStyle);
 
         Assert.AreEqual(expected: (short)excelStyle.BorderTopColor, actual: npoiStyle.TopBorderColor);
         Assert.AreEqual(expected: (short)excelStyle.BorderBottomColor, actual: npoiStyle.BottomBorderColor);
@@ -107,15 +109,15 @@ public class StyleConverterTest
             BorderRightColor = Color.Pink,
             DateTimeFormat = "yyyy/mm/dd hh:mm",
             FillForegroundColor = Color.Yellow,
-            FillPattern = Common.Models.FillPattern.LeastDots,
+            FillPattern = FillPattern.LeastDots,
             FontStyle = null,
-            HorizontalAlignment = Common.Models.HorizontalAlignment.Distributed,
-            VerticalAlignment = Common.Models.VerticalAlignment.Top
+            HorizontalAlignment = HorizontalAlignment.Distributed,
+            VerticalAlignment = VerticalAlignment.Top
         };
 
-        IWorkbook npoiWorkbook = GetNpoiWorkbookXls();
+        _NPOI.IWorkbook npoiWorkbook = GetNpoiWorkbookXls();
         StyleConverter converter = new(npoiWorkbook);
-        ICellStyle npoiStyle = converter.Convert(excelStyle);
+        _NPOI.ICellStyle npoiStyle = converter.Convert(excelStyle);
 
         Assert.AreEqual(expected: (short)excelStyle.BorderTopColor, actual: npoiStyle.TopBorderColor);
         Assert.AreEqual(expected: (short)excelStyle.BorderBottomColor, actual: npoiStyle.BottomBorderColor);
@@ -140,9 +142,9 @@ public class StyleConverterTest
             Color = Color.Blue
         };
 
-        IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
+        _NPOI.IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
         StyleConverter converter = new(npoiWorkbook);
-        IFont npoiFont = converter.Convert(excelFont);
+        _NPOI.IFont npoiFont = converter.Convert(excelFont);
 
         short actual = npoiFont.Color;
         short expected = (short)excelFont.Color;
@@ -160,9 +162,9 @@ public class StyleConverterTest
             Name = "Arial"
         };
 
-        IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
+        _NPOI.IWorkbook npoiWorkbook = GetNpoiWorkbookXlsx();
         StyleConverter converter = new(npoiWorkbook);
-        IFont npoiFont = converter.Convert(excelFont);
+        _NPOI.IFont npoiFont = converter.Convert(excelFont);
 
         Assert.AreEqual(expected: (short)excelFont.Color, actual: npoiFont.Color);
         Assert.AreEqual(expected: (double)excelFont.HeightInPoints, actual: npoiFont.FontHeightInPoints);

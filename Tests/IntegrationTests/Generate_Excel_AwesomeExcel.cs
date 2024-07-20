@@ -1,10 +1,10 @@
-﻿using AwesomeExcel.Common.Models;
+﻿using AwesomeExcel;
+using AwesomeExcel.Common.Models;
 using AwesomeExcel.Customization;
-using AwesomeExcel.Customization.Services;
 using AwesomeExcel.Customization.Fluent;
-using AwesomeExcel.BridgeNpoi;
+using AwesomeExcel.Customization.Services;
 
-namespace AwesomeExcel.IntegrationTests;
+namespace Tests.IntegrationTests;
 
 [TestClass]
 public class Generate_Excel_AwesomeExcel
@@ -12,32 +12,31 @@ public class Generate_Excel_AwesomeExcel
     [TestMethod]
     public void Generate_Excel_Actors()
     {
-        AwesomeExcel awesomeExcel = new();
+        ExcelGenerator awesomeExcel = new();
         List<Person> actors = GetActors();
 
-        MemoryStream file = awesomeExcel.Generate(actors, (SheetCustomizer<Person> sps) =>
+        MemoryStream file = awesomeExcel.Generate(actors, (SheetCustomizer<Person> sheet) =>
         {
-            sps.Workbook.SetFileType(FileType.Xlsx);
+            sheet.Workbook.SetFileType(FileType.Xlsx);
 
-            sps.Sheet
-                .SetName("Sheet's name test")
+            sheet.SetName("Sheet's name test")
                 .SetFillForegroundColor(Color.LightBlue)
                 .SetHeaderFillForegroundColor(Color.Blue)
                 .SetHeaderBorderBottomColor(Color.Red)
                 .SetVerticalAlignment(VerticalAlignment.Center);
 
-            sps.Column(p => p.Name)
+            sheet.Column(p => p.Name)
                 .SetName("Actor's name")
                 .SetStyle(s => s.FillForegroundColor = Color.Aqua);
 
-            sps.Column(p => p.Surname)
+            sheet.Column(p => p.Surname)
                 .SetName("Actor's surname")
                 .SetHorizontalAlignment(HorizontalAlignment.Right);
 
-            sps.Column(p => p.BirthDate)
+            sheet.Column(p => p.BirthDate)
                 .SetStyle(s => s.DateTimeFormat = "dd/mm/yyyy");
 
-            sps.Cells(p => p.BirthDate)
+            sheet.Cells(p => p.BirthDate)
                 .SetFillForegroundColor(birthDate => birthDate.HasValue && birthDate.Value.Month == 3 ? Color.Red : null);
         });
 
@@ -48,15 +47,15 @@ public class Generate_Excel_AwesomeExcel
     [TestMethod]
     public void Generate_Excel_Actors_Invoices()
     {
-        AwesomeExcel awesomeExcel = new();
+        ExcelGenerator awesomeExcel = new();
         List<Person> actors = GetActors();
         List<Invoice> invoices = GetInvoices();
 
-        MemoryStream file = awesomeExcel.Generate(actors, invoices, (SheetsCustomizer<Person, Invoice> customization) =>
+        MemoryStream file = awesomeExcel.Generate(actors, invoices, (SheetCustomizer<Person> sheet1, SheetCustomizer<Invoice> sheet2) =>
         { 
-            customization.Workbook.SetFileType(FileType.Xlsx);
+            sheet1.Workbook.SetFileType(FileType.Xlsx);
 
-            customization.Sheet1
+            sheet1
                 .SetName("Actors sheet")
                 .HasHeader(true)
                 .SetFillForegroundColor(Color.LightBlue)
@@ -64,19 +63,19 @@ public class Generate_Excel_AwesomeExcel
                 .SetHeaderBorderBottomColor(Color.Red)
                 .SetVerticalAlignment(VerticalAlignment.Center);
 
-            customization.Column(customization.Sheet1, p => p.Name)
+            sheet1.Column(p => p.Name)
                 .SetName("Actor's name")
                 .SetStyle(s => s.FillForegroundColor = Color.Aqua);
 
-            customization.Column(customization.Sheet1, p => p.Surname)
+            sheet1.Column(p => p.Surname)
                 .SetName("Actor's surname")
                 .SetHorizontalAlignment(HorizontalAlignment.Right);
 
-            customization.Column(customization.Sheet2, p => p.CreationDate)
+            sheet2.Column(p => p.CreationDate)
                 .SetDateTimeFormat("dd/mm/yyyy");
 
-            customization.Column(customization.Sheet2, p => p.Amount)
-                .SetFillForegroundColor(Color.Green);
+            sheet2.Cells(p => p.Amount)
+                .SetFillForegroundColor(amount => amount >= 1500 ? Color.Green : Color.Red);
         });
 
         string fileName = nameof(Generate_Excel_Actors_Invoices) + ".xlsx";
@@ -86,11 +85,11 @@ public class Generate_Excel_AwesomeExcel
     [TestMethod]
     public void Generate_Excel_Actors_Invoices_NoCustomization()
     {
-        AwesomeExcel awesomeExcel = new();
+        ExcelGenerator awesomeExcel = new();
         List<Person> people = GetActors();
         List<Invoice> invoices = GetInvoices();
 
-        MemoryStream file = awesomeExcel.Generate(people, invoices, (c) => { });
+        MemoryStream file = awesomeExcel.Generate(people, invoices);
 
         string fileName = nameof(Generate_Excel_Actors_Invoices_NoCustomization) + ".xlsx";
         WriteFile(file, fileName);
@@ -99,10 +98,10 @@ public class Generate_Excel_AwesomeExcel
     [TestMethod]
     public void Generate_Excel_Invoices_NoCustomization()
     {
-        AwesomeExcel awesomeExcel = new();
+        ExcelGenerator awesomeExcel = new();
         List<Invoice> invoices = GetInvoices();
 
-        MemoryStream file = awesomeExcel.Generate(invoices, (c) => { });
+        MemoryStream file = awesomeExcel.Generate(invoices);
 
         string fileName = nameof(Generate_Excel_Invoices_NoCustomization) + ".xlsx";
         WriteFile(file, fileName);
@@ -111,22 +110,22 @@ public class Generate_Excel_AwesomeExcel
     [TestMethod]
     public void Generate_Excel_Invoices()
     {
-        AwesomeExcel awesomeExcel = new();
+        ExcelGenerator awesomeExcel = new();
 
         // Get the invoices (or any data you need)
         List<Invoice> invoices = GetInvoices();
 
         // Generate the Excel file with some customizations
-        MemoryStream file = awesomeExcel.Generate(invoices, customization =>
+        MemoryStream file = awesomeExcel.Generate(invoices, sheet =>
         {
             // Customize the entire sheet
-            customization.Sheet
+            sheet
                 .SetName("Client's invoices")
                 .SetFontName("Aptos")
                 .SetBordersColor(Color.Black);
 
             // Customize the header row
-            customization.Sheet
+            sheet
                 .HasHeader()
                 .SetHeaderFontBold()
                 .SetHeaderFontHeightInPoints(12)
@@ -134,12 +133,12 @@ public class Generate_Excel_AwesomeExcel
                 .SetHeaderFillForegroundColor(Color.Gray_25_Percent);
 
             // Customize only the specified column 
-            customization.Column(columns => columns.CreationDate)
+            sheet.Column(columns => columns.CreationDate)
                 .SetName("Created on")
                 .SetDateTimeFormat("dddd dd mmmm YYYY");
 
             // Customize only the cells which amount is greater than 1000
-            customization.Cells(columns => columns.Amount)
+            sheet.Cells(columns => columns.Amount)
                 .SetFillForegroundColor(amount => amount > 1000 ? Color.LightGreen : null);
         });
 

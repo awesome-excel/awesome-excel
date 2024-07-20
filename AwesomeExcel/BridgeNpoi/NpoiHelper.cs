@@ -5,9 +5,9 @@ namespace AwesomeExcel.BridgeNpoi;
 
 internal class NpoiHelper
 {
-    public void SetCellValue(_NPOI.ICell cell, _Excel.ColumnType columnType, object value)
+    public void SetCellValue(_NPOI.ICell cell, _Excel.ColumnType columnType, object? value)
     {
-        string _value = value == null ? string.Empty : value.ToString();
+        string _value = value?.ToString() ?? string.Empty;
 
         if (columnType == _Excel.ColumnType.String)
         {
@@ -40,14 +40,6 @@ internal class NpoiHelper
             cell.SetCellValue(_value);
         }
     }
-
-    public _NPOI.CellType GetCellType(_Excel.ColumnType columnType) => columnType switch
-    {
-        _Excel.ColumnType.Numeric => _NPOI.CellType.Numeric,
-        _Excel.ColumnType.String => _NPOI.CellType.String,
-        _Excel.ColumnType.DateTime => _NPOI.CellType.Numeric,
-        _ => _NPOI.CellType.String,
-    };
 
     private bool TryParseNumeric(_Excel.ColumnType columnType, object value, string valueStr, out double number)
     {
