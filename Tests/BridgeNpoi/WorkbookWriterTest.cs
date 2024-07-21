@@ -1,4 +1,4 @@
-﻿using AwesomeExcel.BridgeNpoi;
+﻿using AwesomeExcel.BridgeNPOI;
 
 namespace Tests.BridgeNpoi;
 

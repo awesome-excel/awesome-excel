@@ -1,6 +1,6 @@
-﻿using AwesomeExcel.Common.Comparers;
-using AwesomeExcel.Common.Models;
-using AwesomeExcel.Common.Services;
+﻿using AwesomeExcel;
+using AwesomeExcel.Core.Comparers;
+using AwesomeExcel.Core.Services;
 
 namespace Tests.Common;
 

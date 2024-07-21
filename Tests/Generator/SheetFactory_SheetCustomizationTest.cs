@@ -1,6 +1,5 @@
-using AwesomeExcel.Common.Models;
-using AwesomeExcel.Customization.Models;
-using AwesomeExcel.Generator;
+using AwesomeExcel;
+using AwesomeExcel.Core.Services;
 
 namespace Tests.Generator;
 

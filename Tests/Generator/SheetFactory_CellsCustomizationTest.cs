@@ -1,7 +1,5 @@
-using AwesomeExcel.Common.Models;
-using AwesomeExcel.Customization;
-using AwesomeExcel.Customization.Models;
-using AwesomeExcel.Generator;
+using AwesomeExcel;
+using AwesomeExcel.Core.Services;
 using System.Reflection;
 
 namespace Tests.Generator;
@@ -36,7 +34,7 @@ public class SheetFactory_CellsCustomizationTest
     public void CreateSheet_EmptyCellsCustomization_Successfull()
     {
         SheetFactory factory = new();
-        Sheet sheet = factory.Create(data, null, null, new Dictionary<PropertyInfo, CellCustomization>());
+        Sheet sheet = factory.Create(data, null, null, new Dictionary<PropertyInfo, ICellCustomization>());
     }
 
     [TestMethod]
@@ -126,9 +124,9 @@ public class SheetFactory_CellsCustomizationTest
         public int Age => (DateTime.Now.Date - BirthDate.Date).Days / 365;
     }
 
-    public Dictionary<PropertyInfo, CellCustomization> GetCustomizedCells()
+    public Dictionary<PropertyInfo, ICellCustomization> GetCustomizedCells()
     {
-        return new Dictionary<PropertyInfo, CellCustomization>
+        return new Dictionary<PropertyInfo, ICellCustomization>
         {
             { typeof(Person).GetProperty(nameof(Person.Name)), GetColumnName() },
             { typeof(Person).GetProperty(nameof(Person.Surname)), GetColumnSurname() },
@@ -137,14 +135,14 @@ public class SheetFactory_CellsCustomizationTest
         };
     }
 
-    private CellCustomization GetColumnAge()
+    private ICellCustomization GetColumnAge()
     {
         return new CellCustomization<int>()
             .SetFontHeightInPoints(value => (short)(value % 32767))
             .SetVerticalAlignment(value => value > 500 ? VerticalAlignment.Bottom : null);
     }
 
-    private CellCustomization GetColumnBirthDate()
+    private ICellCustomization GetColumnBirthDate()
     {
         DateTime dt1950 = new(1950, 1, 1);
 
@@ -153,7 +151,7 @@ public class SheetFactory_CellsCustomizationTest
             .SetFontColor(value => value < dt1950 ? Color.Red : Color.SkyBlue);
     }
 
-    private CellCustomization GetColumnSurname()
+    private ICellCustomization GetColumnSurname()
     {
         CellCustomization<string> customizedColumn = new();
         customizedColumn.SetFillForegroundColor(value =>

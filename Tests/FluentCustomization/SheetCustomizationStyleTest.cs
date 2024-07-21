@@ -1,6 +1,4 @@
-﻿using AwesomeExcel.Common.Models;
-using AwesomeExcel.Customization;
-using AwesomeExcel.Customization.Models;
+﻿using AwesomeExcel;
 
 namespace Tests.FluentCustomization;
 

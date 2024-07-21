@@ -1,9 +1,4 @@
 ﻿using AwesomeExcel;
-using AwesomeExcel.Common.Models;
-using AwesomeExcel.Customization;
-using AwesomeExcel.Customization.Fluent;
-using AwesomeExcel.Customization.Services;
-using System.Diagnostics;
 
 namespace Tests.IntegrationTests;
 
@@ -133,7 +128,8 @@ public class Generate_Excel_BigDataSets
 
     private static MemoryStream Generate(ExcelGenerator awesomeExcel, List<Invoice> invoices)
     {
-        Action<SheetCustomizer<Invoice>> x = (customization) =>
+        // Generate the Excel file with some customizations
+        MemoryStream file = awesomeExcel.Generate(invoices, (customization) =>
         {
             // Customize the entire sheet
             customization
@@ -157,10 +153,7 @@ public class Generate_Excel_BigDataSets
             // Customize only the cells which amount is greater than 1000
             customization.Cells(columns => columns.Random1)
                 .SetFillForegroundColor(random1 => random1 > 1000 ? Color.LightGreen : null);
-        };
-
-        // Generate the Excel file with some customizations
-        MemoryStream file = awesomeExcel.Generate(invoices, x);
+        });
         return file;
     }
 

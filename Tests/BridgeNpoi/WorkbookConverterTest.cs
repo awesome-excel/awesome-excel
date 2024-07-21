@@ -1,8 +1,6 @@
-﻿using AwesomeExcel.BridgeNpoi;
-using AwesomeExcel.Common.Models;
-using AwesomeExcel.Customization;
-using AwesomeExcel.Customization.Services;
-using AwesomeExcel.Generator;
+﻿using AwesomeExcel;
+using AwesomeExcel.BridgeNPOI;
+using AwesomeExcel.Core.Services;
 using Tests.IntegrationTests;
 
 namespace Tests.BridgeNpoi;
