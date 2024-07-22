@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>AwesomeExcel</id>
+    <version>1.0.4</version>
+    <title>AwesomeExcel</title>
+    <authors>AwesomeExcel</authors>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <readme>readme.md</readme>
+    <projectUrl>https://github.com/awesome-excel/awesome-excel</projectUrl>
+    <description>Generate customizable Excel files via object mapping</description>
+    <copyright>MIT</copyright>
+    <tags>excel npoi mapping xlsx</tags>
+    <repository type="git" commit="43f65798f216a7f9c30ed3b4eb166f7caf3b9c60" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="NPOI" version="2.7.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\AwesomeExcel.BridgeNPOI\bin\Release\net8.0\AwesomeExcel.BridgeNPOI.dll" target="lib\net8.0\AwesomeExcel.BridgeNPOI.dll" />
+    <file src=".\AwesomeExcel.Core\bin\Release\net8.0\AwesomeExcel.Core.dll" target="lib\net8.0\AwesomeExcel.Core.dll" />
+    <file src=".\AwesomeExcel\bin\Release\net8.0\AwesomeExcel.dll" target="lib\net8.0\AwesomeExcel.dll" />
+    <file src=".\AwesomeExcel\bin\Release\net8.0\AwesomeExcel.xml" target="lib\net8.0\AwesomeExcel.xml" />
+    <file src=".\LICENSE" target="\LICENSE" />
+    <file src=".\readme.md" target="\readme.md" />
+  </files>
+</package>

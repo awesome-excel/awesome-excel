@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeExcel.Core", "Awesom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeExcel.BridgeNPOI", "AwesomeExcel.BridgeNPOI\AwesomeExcel.BridgeNPOI.csproj", "{7EBF274B-AC2E-447D-B30C-1040BAC10E6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{B64ECD0C-16D6-4BE8-B81D-43D782F48B15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{B64ECD0C-16D6-4BE8-B81D-43D782F48B15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

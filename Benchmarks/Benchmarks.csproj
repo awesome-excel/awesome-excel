@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AwesomeExcel.Core\AwesomeExcel.Core.csproj" />
     <ProjectReference Include="..\AwesomeExcel\AwesomeExcel.csproj" />
   </ItemGroup>
 
