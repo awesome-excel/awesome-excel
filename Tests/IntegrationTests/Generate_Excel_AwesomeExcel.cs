@@ -43,33 +43,32 @@ public class Generate_Excel_AwesomeExcel
     [TestMethod]
     public void Generate_Excel_Actors_Invoices()
     {
-        ExcelGenerator awesomeExcel = new();
+        ExcelGenerator excel = new();
         List<Person> actors = GetActors();
         List<Invoice> invoices = GetInvoices();
 
-        MemoryStream file = awesomeExcel.Generate(actors, invoices, (SheetCustomizer<Person> sheet1, SheetCustomizer<Invoice> sheet2) =>
-        { 
-            sheet1.Workbook.SetFileType(FileType.Xlsx);
-
+        MemoryStream file = excel.Generate(actors, invoices, (SheetCustomizer<Person> sheet1, SheetCustomizer<Invoice> sheet2) =>
+        {
             sheet1
                 .SetName("Actors sheet")
-                .HasHeader(true)
-                .SetFillForegroundColor(Color.LightBlue)
+                .SetFillForegroundColor(Color.LightBlue);
+
+            // Customize the first sheet header row
+            sheet1.HasHeader()
                 .SetHeaderFillForegroundColor(Color.Blue)
                 .SetHeaderBorderBottomColor(Color.Red)
                 .SetVerticalAlignment(VerticalAlignment.Center);
 
-            sheet1.Column(p => p.Name)
-                .SetName("Actor's name")
-                .SetStyle(s => s.FillForegroundColor = Color.Aqua);
-
+            // Customize the specified column of the first sheet
             sheet1.Column(p => p.Surname)
                 .SetName("Actor's surname")
                 .SetHorizontalAlignment(HorizontalAlignment.Right);
 
+            // Customize the specified column of the second sheet
             sheet2.Column(p => p.CreationDate)
                 .SetDateTimeFormat("dd/mm/yyyy");
 
+            // Customize the cells which amount is greater than 1000 on the second sheet
             sheet2.Cells(p => p.Amount)
                 .SetFillForegroundColor(amount => amount >= 1500 ? Color.Green : Color.Red);
         });
@@ -106,13 +105,13 @@ public class Generate_Excel_AwesomeExcel
     [TestMethod]
     public void Generate_Excel_Invoices()
     {
-        ExcelGenerator awesomeExcel = new();
+        ExcelGenerator excel = new();
 
         // Get the invoices (or any data you need)
         List<Invoice> invoices = GetInvoices();
 
         // Generate the Excel file with some customizations
-        MemoryStream file = awesomeExcel.Generate(invoices, sheet =>
+        MemoryStream file = excel.Generate(invoices, sheet =>
         {
             // Customize the entire sheet
             sheet
@@ -133,12 +132,12 @@ public class Generate_Excel_AwesomeExcel
                 .SetName("Created on")
                 .SetDateTimeFormat("dddd dd mmmm YYYY");
 
-            // Customize only the cells which amount is greater than 1000
+            // Customize the cells which amount is greater than 1000
             sheet.Cells(columns => columns.Amount)
                 .SetFillForegroundColor(amount => amount > 1000 ? Color.LightGreen : null);
         });
 
-        string fileName = nameof(Generate_Excel_Invoices) + ".xlsx";
+        string fileName = nameof(Generate_Excel_Invoices) + "invoices.xlsx";
         WriteFile(file, fileName);
     }
 
