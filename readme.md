@@ -110,10 +110,13 @@ MemoryStream file = excel.Generate(actors, invoices, (sheet1, sheet2) =>
 });
 ```
 
-####
-
-This library serves as:
+#### This library serves as:
 - An easy-to-use abstraction layer over the NPOI engine (or any engine, as it allows developers to implement bridges for any engine).
-- A quick solution for mapping objects to Excel files, which is useful for exporting data from your application. In this scenario, you would use Dapper or EntityFramework to retrieve the data from your database, resulting in a List of objects. You can then call AwesomeExcel's Generate() method directly with your dataset. Many companies already have "export to Excel" features in their reporting systems. However, these often rely on outdated, hard-to-read code that lacks customization options for colors, fonts, etc. 
+- A quick solution for mapping objects to Excel files, which is useful for exporting data from your application. In this scenario, you would use Dapper or EntityFramework to retrieve the data from your database, resulting in a List of objects. You can then call AwesomeExcel's Generate() method directly with your dataset. Many companies already have "export to Excel" features in their reporting systems. However, these often rely on outdated, hard-to-read code that lacks customization options for colors, fonts, etc.
+
+#### What about Aspose.Cell:
+Aspose.Cell is a super-feature-rich library, and I’m ok with not matching its full functionality (which would take years to develop and might not be practical).
+If you need those advanced features, Aspose.Cell is the best option. However, for small to medium-sized organizations looking to generate downloadable data reports with minimal code and easy customization, you can use my library or consider others available online, like SpreadSheetLite or ExcelMapper.
+
 
 We currently don't support charts/formulas and reading Excel files.
