@@ -46,7 +46,7 @@ public class SheetFactory_CellsCustomizationTest
         foreach (Row row in sheet.Rows)
         {
             const int columnName = 0;
-            Cell cell = row.Cells[columnName];
+            Cell cell = row.Cells.ElementAt(columnName);
 
             Assert.AreEqual(cell.Style.HorizontalAlignment, HorizontalAlignment.Right);
         }
@@ -61,7 +61,7 @@ public class SheetFactory_CellsCustomizationTest
         foreach (Row row in sheet.Rows)
         {
             const int columnSurname = 1;
-            Cell cell = row.Cells[columnSurname];
+            Cell cell = row.Cells.ElementAt(columnSurname);
             string surname = (string)cell.Value;
 
             Color? expected = surname == "da Vinci"
@@ -85,7 +85,7 @@ public class SheetFactory_CellsCustomizationTest
         foreach (Row row in sheet.Rows)
         {
             const int columnBirthDate = 2;
-            Cell cell = row.Cells[columnBirthDate];
+            Cell cell = row.Cells.ElementAt(columnBirthDate);
             var birthDate = (DateTime)cell.Value;
 
             bool expectedBold = birthDate.Month <= 6;
@@ -105,7 +105,7 @@ public class SheetFactory_CellsCustomizationTest
         foreach (Row row in sheet.Rows)
         {
             const int columnAge = 3;
-            Cell cell = row.Cells[columnAge];
+            Cell cell = row.Cells.ElementAt(columnAge);
             var age = (int)cell.Value;
 
             VerticalAlignment? expectedVerticalAlignment = age > 500 ? VerticalAlignment.Bottom : null;

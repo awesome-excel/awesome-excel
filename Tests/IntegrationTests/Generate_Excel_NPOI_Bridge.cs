@@ -81,10 +81,7 @@ public class Generate_Excel_NPOI_Bridge
 
             for (int i = 0; i < 1000; i++)
             {
-                Row newRow = new()
-                {
-                    Cells = new List<Cell>()
-                };
+                var cells = new List<Cell>();
 
                 for (int y = 0; y < 5; y++)
                 {
@@ -92,8 +89,13 @@ public class Generate_Excel_NPOI_Bridge
                     {
                         Value = y
                     };
-                    newRow.Cells.Add(newCell);
+                    cells.Add(newCell);
                 }
+
+                Row newRow = new()
+                {
+                    Cells = cells
+                };
 
                 newSheet.Rows.Add(newRow);
             }

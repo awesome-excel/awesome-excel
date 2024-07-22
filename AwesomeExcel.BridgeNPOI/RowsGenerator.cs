@@ -92,10 +92,13 @@ internal class RowsGenerator
 
     private void GenerateCells(_NPOI.IRow npoiRow, Row? excelRow, int rowNumber)
     {
-        int rowColumnsCount = excelRow?.Cells?.Count ?? 0;
-        int sheetColumnCount = excelSheet.Columns?.Count ?? 0;
+        if (excelRow?.Cells == null)
+            return;
 
-        for (int columnIndex = 0; columnIndex < rowColumnsCount; columnIndex++)
+        int sheetColumnCount = excelSheet.Columns?.Count ?? 0;
+        int columnIndex = 0;
+
+        foreach (Cell? cell in excelRow.Cells)
         {
             Column column;
 
@@ -113,8 +116,6 @@ internal class RowsGenerator
                     Style = null
                 };
             }
-
-            Cell cell = excelRow.Cells[columnIndex];
             Style? colorBanding = GetColorBanding(rowNumber);
             Style? dateTimeFormat = GetDefaultDateTimeFormat(column.ColumnType);
             Style? style = stylesMerger.Merge(dateTimeFormat, excelSheet.Style, colorBanding, column.Style, cell?.Style);
@@ -124,6 +125,8 @@ internal class RowsGenerator
             _NPOI.ICell npoiCell = CreateCell(npoiRow, columnIndex, cellType, npoiStyle);
 
             npoiHelper.SetCellValue(npoiCell, column.ColumnType, cell?.Value);
+
+            columnIndex++;
         }
     }
 

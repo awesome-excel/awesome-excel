@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeExcel", "AwesomeExce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{9B0EE7A9-DA19-4153-A077-86E4196D14B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomeExcel.Core", "AwesomeExcel.Core\AwesomeExcel.Core.csproj", "{ADDB5854-522A-45B2-82F4-B968C8F4E8B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeExcel.Core", "AwesomeExcel.Core\AwesomeExcel.Core.csproj", "{ADDB5854-522A-45B2-82F4-B968C8F4E8B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomeExcel.BridgeNPOI", "AwesomeExcel.BridgeNPOI\AwesomeExcel.BridgeNPOI.csproj", "{7EBF274B-AC2E-447D-B30C-1040BAC10E6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeExcel.BridgeNPOI", "AwesomeExcel.BridgeNPOI\AwesomeExcel.BridgeNPOI.csproj", "{7EBF274B-AC2E-447D-B30C-1040BAC10E6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{B64ECD0C-16D6-4BE8-B81D-43D782F48B15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7EBF274B-AC2E-447D-B30C-1040BAC10E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EBF274B-AC2E-447D-B30C-1040BAC10E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EBF274B-AC2E-447D-B30C-1040BAC10E6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B64ECD0C-16D6-4BE8-B81D-43D782F48B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B64ECD0C-16D6-4BE8-B81D-43D782F48B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B64ECD0C-16D6-4BE8-B81D-43D782F48B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B64ECD0C-16D6-4BE8-B81D-43D782F48B15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

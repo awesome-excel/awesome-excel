@@ -287,10 +287,7 @@ public class WorkbookConverterTest
 
             for (int i = 0; i < 5000; i++)
             {
-                Row newRow = new()
-                {
-                    Cells = new List<Cell>()
-                };
+                var cells = new List<Cell>();
 
                 for (int y = 0; y < 20; y++)
                 {
@@ -298,8 +295,13 @@ public class WorkbookConverterTest
                     {
                         Value = y
                     };
-                    newRow.Cells.Add(newCell);
+                    cells.Add(newCell);
                 }
+
+                Row newRow = new()
+                {
+                    Cells = cells
+                };
 
                 newSheet.Rows.Add(newRow);
             }

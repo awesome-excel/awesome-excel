@@ -121,7 +121,7 @@ public class SheetFactoryTest
         // Cells
         Row firstRow = sheet.Rows[0];
         Assert.IsNotNull(firstRow.Cells);
-        Assert.AreEqual(firstRow.Cells.Count, 4);
+        Assert.AreEqual(firstRow.Cells.Count(), 4);
     }
 
     [TestMethod]
@@ -132,7 +132,7 @@ public class SheetFactoryTest
 
         // Cells
         Row firstRow = sheet.Rows[0];
-        IList<Cell> cells = firstRow.Cells;
+        IList<Cell> cells = firstRow.Cells.ToList();
 
         // First cell
         Assert.AreEqual(actual: cells[0].Value, expected: "Leonardo");

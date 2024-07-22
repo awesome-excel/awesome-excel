@@ -61,7 +61,7 @@ internal class SheetFactory
 
         foreach (object row in rows)
         {
-            List<Cell> rowCells = GetRowCells(row, columnsProperties, cellsCustomization);
+            IEnumerable<Cell> rowCells = GetRowCells(row, columnsProperties, cellsCustomization);
             Row r = new()
             {
                 Cells = rowCells
@@ -72,10 +72,8 @@ internal class SheetFactory
         return sheetRows;
     }
 
-    private List<Cell> GetRowCells(object row, IEnumerable<PropertyInfo> columnsProperties, IReadOnlyDictionary<PropertyInfo, ICellCustomization>? cellsCustomization)
+    private IEnumerable<Cell> GetRowCells(object row, IEnumerable<PropertyInfo> columnsProperties, IReadOnlyDictionary<PropertyInfo, ICellCustomization>? cellsCustomization)
     {
-        List<Cell> cells = new();
-
         foreach (PropertyInfo column in columnsProperties)
         {
             object pValue = column.GetValue(row, null);
@@ -87,10 +85,8 @@ internal class SheetFactory
                 Style = cellStyle
             };
 
-            cells.Add(c);
+            yield return c;
         }
-
-        return cells;
     }
 
     private Style? GetCellCustomStyle(IReadOnlyDictionary<PropertyInfo, ICellCustomization>? cellsCustomization, PropertyInfo pi, object pValue)

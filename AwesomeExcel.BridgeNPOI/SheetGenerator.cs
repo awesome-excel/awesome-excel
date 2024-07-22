@@ -60,9 +60,10 @@ internal class SheetGenerator
             npoiSheet.SetColumnWidth(columnIndex, newWidth);
         }
 
-        string getDateTimeFormat(Sheet excelSheet, int columnIndex)
+        string? getDateTimeFormat(Sheet excelSheet, int columnIndex)
         {
-            return excelSheet.Rows[0].Cells[columnIndex].Style?.DateTimeFormat ?? excelSheet.Columns[columnIndex].Style?.DateTimeFormat;
+            string? columnDateTimeFormat = excelSheet.Columns[columnIndex].Style?.DateTimeFormat;
+            return columnDateTimeFormat;
         }
 
         string getTodayExcelFormat(string _dateTimeFormat)
@@ -90,7 +91,7 @@ internal class SheetGenerator
         int getStringCellLength(int rowIndex, int columnIndex)
         {
             Row row = excelSheet.Rows[rowIndex];
-            Cell cell = row.Cells[columnIndex];
+            Cell cell = row.Cells.ElementAt(columnIndex);
             string str = (string)cell.Value;
             return str?.Length ?? 0;
         }

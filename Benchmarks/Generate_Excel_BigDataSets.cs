@@ -1,127 +1,27 @@
 ﻿using AwesomeExcel;
+using BenchmarkDotNet.Attributes;
 
-namespace Tests.IntegrationTests;
+namespace Benchmarks;
 
-[TestClass]
 public class Generate_Excel_BigDataSets
 {
-    private bool writefile = true;
+    private bool writefile = false;
+    private IEnumerable<Invoice> invoices;
 
-    [TestMethod]
-    public void Generate_Excel_Invoices_1()
+    [GlobalSetup]
+    public void Setup()
     {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(1);
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_1) + ".xlsx";
-        WriteFile(file, fileName);
+        invoices = MockData.GetInvoices(5_000);
     }
 
-    [TestMethod]
-    public void Generate_Excel_Invoices_100()
-    {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(100);
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_100) + ".xlsx";
-        WriteFile(file, fileName);
-    }
-
-    [TestMethod]
-    public void Generate_Excel_Invoices_500()
-    {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(500);
-
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_500) + ".xlsx";
-        WriteFile(file, fileName);
-    }
-
-    [TestMethod]
-    public void Generate_Excel_Invoices_1000()
-    {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(1000);
-
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_1000) + ".xlsx";
-        WriteFile(file, fileName);
-    }
-
-    [TestMethod]
-    public void Generate_Excel_Invoices_2000()
-    {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(2000);
-
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-
-        string fileName = nameof(Generate_Excel_Invoices_2000) + ".xlsx";
-        WriteFile(file, fileName);
-    }
-
-    [TestMethod]
-    public void Generate_Excel_Invoices_3000()
-    {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(3000);
-
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_3000) + ".xlsx";
-        WriteFile(file, fileName);
-    }
-
-    [TestMethod]
+    [Benchmark]
     public void Generate_Excel_Invoices_5000()
     {
         ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(5000);
-
         MemoryStream file = Generate(awesomeExcel, invoices);
-
+                                 
         string fileName = nameof(Generate_Excel_Invoices_5000) + ".xlsx";
-        WriteFile(file, fileName);
-    }
 
-    [TestMethod]
-    public void Generate_Excel_Invoices_10_000()
-    {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(10_000);
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_10_000) + ".xlsx";
-        WriteFile(file, fileName);
-    }
-
-    [TestMethod]
-    public void Generate_Excel_Invoices_20_000()
-    {
-        AwesomeExcel.ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(20_000);
-
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_20_000) + ".xlsx";
-        WriteFile(file, fileName);
-    }
-
-    [TestMethod]
-    public void Generate_Excel_Invoices_30_000()
-    {
-        ExcelGenerator awesomeExcel = new();
-        var invoices = MockData.GetInvoices(30_000);
-
-        MemoryStream file = Generate(awesomeExcel, invoices);
-
-        string fileName = nameof(Generate_Excel_Invoices_30_000) + ".xlsx";
         WriteFile(file, fileName);
     }
 
@@ -160,7 +60,7 @@ public class Generate_Excel_BigDataSets
     {
         if (writefile == false) return;
 
-        string directory = Path.Combine(Environment.CurrentDirectory, "tests-output", nameof(Generate_Excel_BigDataSets));
+        string directory = Path.Combine(Environment.CurrentDirectory, "benchmark-excel-output", nameof(Generate_Excel_BigDataSets));
         Directory.CreateDirectory(directory);
 
         string filePath = Path.Combine(directory, fileName);
@@ -186,8 +86,6 @@ public class Generate_Excel_BigDataSets
 
     private static class MockData
     {
-        public static IEnumerable<Invoice> Invoices = GetRandomInvoices(50000);
-
         public static IEnumerable<Invoice> GetRandomInvoices(int count)
         {
             Random random = new();
@@ -196,7 +94,7 @@ public class Generate_Excel_BigDataSets
             {
                 Invoice invoice = new()
                 {
-                    Amount = (random.NextDouble() * 10000) / 100,
+                    Amount = random.NextDouble() * 10000 / 100,
                     CreationDate = new DateTime(random.Next(1950, 2050), random.Next(1, 12), random.Next(1, 28), random.Next(0, 23), random.Next(0, 59), random.Next(0, 59)),
                     Random1 = random.Next(),
                     Random2 = random.Next(),
@@ -215,7 +113,7 @@ public class Generate_Excel_BigDataSets
 
         public static IEnumerable<Invoice> GetInvoices(int count)
         {
-            return Invoices.Take(count).ToList();
+            return GetRandomInvoices(count);
         }
 
         private static string RandomString(int minLength, int maxLength)
