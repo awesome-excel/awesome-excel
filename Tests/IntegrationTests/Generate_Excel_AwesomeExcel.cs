@@ -47,7 +47,7 @@ public class Generate_Excel_AwesomeExcel
         List<Person> actors = GetActors();
         List<Invoice> invoices = GetInvoices();
 
-        MemoryStream file = excel.Generate(actors, invoices, (SheetCustomizer<Person> sheet1, SheetCustomizer<Invoice> sheet2) =>
+        MemoryStream file = excel.Generate(actors, invoices, (sheet1, sheet2) =>
         {
             sheet1
                 .SetName("Actors sheet")
