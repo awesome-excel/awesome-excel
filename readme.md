@@ -1,5 +1,7 @@
 # AwesomeExcel
 
+Nuget package: https://www.nuget.org/packages/AwesomeExcel
+
 ## Generate customizable Excel files via object mapping
 
 ```csharp
