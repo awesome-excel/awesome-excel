@@ -1,4 +1,4 @@
-﻿namespace AwesomeExcel;
+﻿namespace AwesomeExcel.Models;
 
 /// <summary>
 /// Represents a column of a sheet.

@@ -1,4 +1,5 @@
 ﻿using AwesomeExcel.Core.CustomizationServices;
+using AwesomeExcel.Models;
 using System.Collections;
 using System.Reflection;
 using System.Runtime.CompilerServices;

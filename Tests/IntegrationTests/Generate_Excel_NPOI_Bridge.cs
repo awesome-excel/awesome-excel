@@ -1,5 +1,6 @@
 ﻿using AwesomeExcel;
 using AwesomeExcel.BridgeNPOI;
+using AwesomeExcel.Models;
 
 namespace Tests.IntegrationTests;
 

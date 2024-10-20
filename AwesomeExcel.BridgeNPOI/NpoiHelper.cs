@@ -4,15 +4,15 @@ namespace AwesomeExcel.BridgeNPOI;
 
 internal class NpoiHelper
 {
-    public void SetCellValue(_NPOI.ICell cell, ColumnType columnType, object? value)
+    public void SetCellValue(_NPOI.ICell cell, AwesomeExcel.Models.ColumnType columnType, object? value)
     {
         string _value = value?.ToString() ?? string.Empty;
 
-        if (columnType == ColumnType.String)
+        if (columnType == AwesomeExcel.Models.ColumnType.String)
         {
             cell.SetCellValue(_value);
         }
-        else if (columnType == ColumnType.Numeric)
+        else if (columnType == AwesomeExcel.Models.ColumnType.Numeric)
         {
             if (TryParseNumeric(columnType, value, _value, out double number))
             {
@@ -23,7 +23,7 @@ internal class NpoiHelper
                 cell.SetCellValue("non numeric value");
             }
         }
-        else if (columnType == ColumnType.DateTime)
+        else if (columnType == AwesomeExcel.Models.ColumnType.DateTime)
         {
             if (TryParseDateTime(columnType, value, _value, out DateTime dt))
             {
@@ -40,9 +40,9 @@ internal class NpoiHelper
         }
     }
 
-    private bool TryParseNumeric(ColumnType columnType, object value, string valueStr, out double number)
+    private bool TryParseNumeric(AwesomeExcel.Models.ColumnType columnType, object value, string valueStr, out double number)
     {
-        if (columnType != ColumnType.Numeric)
+        if (columnType != AwesomeExcel.Models.ColumnType.Numeric)
         {
             number = 0;
             return false;
@@ -89,9 +89,9 @@ internal class NpoiHelper
         }
     }
 
-    private bool TryParseDateTime(ColumnType columnType, object value, string valueStr, out DateTime dt)
+    private bool TryParseDateTime(AwesomeExcel.Models.ColumnType columnType, object value, string valueStr, out DateTime dt)
     {
-        if (columnType != ColumnType.DateTime)
+        if (columnType != AwesomeExcel.Models.ColumnType.DateTime)
         {
             dt = default;
             return false;

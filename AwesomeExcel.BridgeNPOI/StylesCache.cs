@@ -6,9 +6,9 @@ namespace AwesomeExcel.BridgeNPOI;
 
 internal class StylesCache
 {
-    private readonly Dictionary<Style, _NPOI.ICellStyle> cache = new(new StyleEqualityComparer());
+    private readonly Dictionary<AwesomeExcel.Models.Style, _NPOI.ICellStyle> cache = new(new StyleEqualityComparer());
 
-    public _NPOI.ICellStyle Get(Style excelStyle)
+    public _NPOI.ICellStyle Get(AwesomeExcel.Models.Style excelStyle)
     {
         // This cache is necessary because there's a limit on how many Cell Formats can be used in a workbook.
 
@@ -34,7 +34,7 @@ internal class StylesCache
         return null;
     }
 
-    public void Add(_NPOI.ICellStyle npoiStyle, Style excelStyle)
+    public void Add(_NPOI.ICellStyle npoiStyle, AwesomeExcel.Models.Style excelStyle)
     {
         cache.Add(excelStyle, npoiStyle);
     }

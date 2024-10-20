@@ -1,5 +1,6 @@
 using AwesomeExcel;
 using AwesomeExcel.Core.Services;
+using AwesomeExcel.Models;
 using System.Reflection;
 
 namespace Tests.Generator;

@@ -11,7 +11,7 @@ public class StyleConverter
         this.npoiWorkbook = npoiWorkbook ?? throw new ArgumentNullException(nameof(npoiWorkbook));
     }
 
-    public virtual _NPOI.ICellStyle? Convert(Style? excelStyle)
+    public virtual _NPOI.ICellStyle? Convert(AwesomeExcel.Models.Style? excelStyle)
     {
         if (excelStyle is null)
         {
@@ -21,7 +21,7 @@ public class StyleConverter
         return CreateCellStyle(excelStyle);
     }
 
-    public virtual _NPOI.IFont? Convert(FontStyle? excelStyle)
+    public virtual _NPOI.IFont? Convert(AwesomeExcel.Models.FontStyle? excelStyle)
     {
         if (excelStyle is null)
         {
@@ -31,7 +31,7 @@ public class StyleConverter
         return CreateFont(excelStyle);
     }
 
-    private _NPOI.ICellStyle CreateCellStyle(Style excelStyle)
+    private _NPOI.ICellStyle CreateCellStyle(AwesomeExcel.Models.Style excelStyle)
     {
         _NPOI.ICellStyle npoiStyle = npoiWorkbook.CreateCellStyle();
 
@@ -139,7 +139,7 @@ public class StyleConverter
         }
     }
 
-    private _NPOI.IFont CreateFont(FontStyle fontStyle)
+    private _NPOI.IFont CreateFont(AwesomeExcel.Models.FontStyle fontStyle)
     {
         _NPOI.IFont npoiFont = npoiWorkbook.CreateFont();
 

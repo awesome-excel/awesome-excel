@@ -5,10 +5,10 @@ namespace AwesomeExcel.BridgeNPOI;
 
 internal class FontsCache
 {
-    private readonly Dictionary<FontStyle, _NPOI.IFont> cache = new(new FontStyleEqualityComparer());
-    private readonly Dictionary<FontStyle, int> referenceCounter = new(new FontStyleEqualityComparer());
+    private readonly Dictionary<AwesomeExcel.Models.FontStyle, _NPOI.IFont> cache = new(new FontStyleEqualityComparer());
+    private readonly Dictionary<AwesomeExcel.Models.FontStyle, int> referenceCounter = new(new FontStyleEqualityComparer());
 
-    public _NPOI.IFont Get(FontStyle fontStyle)
+    public _NPOI.IFont Get(AwesomeExcel.Models.FontStyle fontStyle)
     {
         // Problem 1:
         //     This cache is necessary due to a limit on the number of Fonts that can be used in a workbook.
@@ -57,7 +57,7 @@ internal class FontsCache
         return npoiFont;
     }
 
-    private (_NPOI.IFont instance, int usageCount) GetFromCache(FontStyle fontStyle)
+    private (_NPOI.IFont instance, int usageCount) GetFromCache(AwesomeExcel.Models.FontStyle fontStyle)
     {
         if (cache.TryGetValue(fontStyle, out _NPOI.IFont npoiFont))
         {
@@ -68,13 +68,13 @@ internal class FontsCache
         return (null, 0);
     }
 
-    public void Add(_NPOI.IFont npoiFont, FontStyle fontStyle)
+    public void Add(_NPOI.IFont npoiFont, AwesomeExcel.Models.FontStyle fontStyle)
     {
         cache.Add(fontStyle, npoiFont);
         referenceCounter.Add(fontStyle, 0);
     }
 
-    private void Remove(FontStyle fontStyle)
+    private void Remove(AwesomeExcel.Models.FontStyle fontStyle)
     {
         cache.Remove(fontStyle);
         referenceCounter.Remove(fontStyle);

@@ -1,4 +1,6 @@
-﻿namespace AwesomeExcel.Core.Services;
+﻿using AwesomeExcel.Models;
+
+namespace AwesomeExcel.Core.Services;
 
 /// <summary>
 /// Merge multiple styles into one single style.

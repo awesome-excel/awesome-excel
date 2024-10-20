@@ -1,5 +1,5 @@
-﻿using AwesomeExcel;
-using AwesomeExcel.Core.Comparers;
+﻿using AwesomeExcel.Core.Comparers;
+using AwesomeExcel.Models;
 
 namespace Tests.Common;
 

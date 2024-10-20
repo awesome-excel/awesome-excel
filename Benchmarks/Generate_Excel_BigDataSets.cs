@@ -1,4 +1,5 @@
 ﻿using AwesomeExcel;
+using AwesomeExcel.Models;
 using BenchmarkDotNet.Attributes;
 
 namespace Benchmarks;

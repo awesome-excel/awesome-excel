@@ -1,4 +1,4 @@
-﻿namespace AwesomeExcel;
+﻿namespace AwesomeExcel.Models;
 
 /// <summary>
 /// Represents the colors used for even and odd rows.

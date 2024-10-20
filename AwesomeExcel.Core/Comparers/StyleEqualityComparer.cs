@@ -1,4 +1,6 @@
-﻿namespace AwesomeExcel.Core.Comparers;
+﻿using AwesomeExcel.Models;
+
+namespace AwesomeExcel.Core.Comparers;
 
 /// <summary>
 /// Defines methods to support the comparison of objects of type Style for equality.

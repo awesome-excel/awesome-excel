@@ -1,5 +1,6 @@
 ﻿using AwesomeExcel;
 using AwesomeExcel.BridgeNPOI;
+using AwesomeExcel.Models;
 using _NPOI = NPOI.SS.UserModel;
 
 namespace Tests.BridgeNpoi;

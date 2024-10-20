@@ -1,4 +1,6 @@
-﻿namespace AwesomeExcel;
+﻿using AwesomeExcel.Models;
+
+namespace AwesomeExcel;
 
 public static class WorkbookCustomizationExtension
 {

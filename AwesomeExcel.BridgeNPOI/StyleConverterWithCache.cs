@@ -15,7 +15,7 @@ internal class StyleConverterWithCache : StyleConverter, IDisposable
         fontsCache = new FontsCache();
     }
 
-    public override _NPOI.ICellStyle? Convert(Style? style)
+    public override _NPOI.ICellStyle? Convert(AwesomeExcel.Models.Style? style)
     {
         if (style is null)
         {
@@ -33,7 +33,7 @@ internal class StyleConverterWithCache : StyleConverter, IDisposable
         return npoiStyle;
     }
 
-    public override _NPOI.IFont? Convert(FontStyle? style)
+    public override _NPOI.IFont? Convert(AwesomeExcel.Models.FontStyle? style)
     {
         if (style is null)
         {

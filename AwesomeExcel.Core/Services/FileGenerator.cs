@@ -1,4 +1,6 @@
-﻿namespace AwesomeExcel.Core.Services;
+﻿using AwesomeExcel.Models;
+
+namespace AwesomeExcel.Core.Services;
 
 /// <summary>
 /// A base class for an Excel file generator.
@@ -22,6 +24,7 @@ public abstract class FileGenerator<TWorkbook>
 
         Sheet sheet = sheetFactory.Create(rows, customizer, customizer?.GetColumns(), customizer?.GetCells());
         Workbook workbook = workbookFactory.Create(new Sheet[1] { sheet }, customizer?.Workbook);
+
         return GetStream(workbook);
     }
 

@@ -1,4 +1,6 @@
-﻿namespace AwesomeExcel.Core.Services;
+﻿using AwesomeExcel.Models;
+
+namespace AwesomeExcel.Core.Services;
 
 /// <summary>
 /// Defines a factory of objects of type Workbook.

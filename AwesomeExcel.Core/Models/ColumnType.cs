@@ -1,4 +1,4 @@
-﻿namespace AwesomeExcel;
+﻿namespace AwesomeExcel.Models;
 
 /// <summary>
 /// Enumeration of column types.
