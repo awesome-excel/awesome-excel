@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>AwesomeExcel</id>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <title>AwesomeExcel</title>
     <authors>AwesomeExcel</authors>
     <license type="file">LICENSE</license>
