@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AwesomeExcel.BridgeNPOI\AwesomeExcel.BridgeNPOI.csproj" />
-    <ProjectReference Include="..\AwesomeExcel.BridgeOpenXML\AwesomeExcel.BridgeOpenXML.csproj" />
     <ProjectReference Include="..\AwesomeExcel\AwesomeExcel.csproj" />
   </ItemGroup>
 

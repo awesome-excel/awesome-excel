@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AwesomeExcel.BridgeNPOI\AwesomeExcel.BridgeNPOI.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\AwesomeExcel.BridgeOpenXML\AwesomeExcel.BridgeOpenXML.csproj" />
     <ProjectReference Include="..\AwesomeExcel.Core\AwesomeExcel.Core.csproj" PrivateAssets="all" />
   </ItemGroup>
 
